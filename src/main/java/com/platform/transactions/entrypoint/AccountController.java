@@ -22,7 +22,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/v1/account/{accountId}", method = RequestMethod.GET)
-    public AccountResponse createAccount(@PathVariable String accountId) {
+    public AccountResponse get(@PathVariable String accountId) {
         return entrypoint.loadAccount(accountId);
     }
 }

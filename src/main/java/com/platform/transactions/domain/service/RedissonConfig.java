@@ -14,10 +14,10 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 @Slf4j
 public class RedissonConfig {
 
-    @Value("${application.lockmanager.port}")
+    @Value("${application.lockmanager.port:6379}")
     private Integer port;
 
-    @Value("${application.lockmanager.host}")
+    @Value("${application.lockmanager.host:localhost}")
     private String serverHost;
 
     @Bean

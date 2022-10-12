@@ -10,6 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -20,11 +23,28 @@ public class AccountService {
 
     public AccountResponse create(AccountRequest request) {
         var account = modelMapper.map(request, Account.class);
+        account.setAccountId(UUID.randomUUID().toString());
         account = accountRepository.create(account);
+
+        return modelMapper.map(account, AccountResponse.class);
     }
 
-    public AccountResponse load(AccountResponse response) {
-        return null;
+    public AccountResponse load(String accountId) {
+         var accountOpt = accountRepository.findById(accountId);
+
+         if (accountOpt.isEmpty()) {
+             Optional.empty();
+         }
+
+         var account = accountOpt.get();
+
+         return AccountResponse.builder()
+                 .cash(account.getCash())
+                 .name(account.getName())
+                 .accountId(account.getAccountId())
+                 .build();
+
+
     }
 
 

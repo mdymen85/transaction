@@ -20,7 +20,7 @@ public class TransactionEntity {
     @Column(name = "account_id", nullable = false)
     private String accountId;
 
-    @Column(nullable = false)
+    @Column(name= "cash_value", nullable = false)
     private BigInteger value;
 
 }

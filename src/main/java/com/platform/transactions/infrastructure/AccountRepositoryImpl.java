@@ -1,10 +1,12 @@
 package com.platform.transactions.infrastructure;
 
 import com.platform.transactions.domain.model.Account;
+import com.platform.transactions.infrastructure.entity.AccountEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Component
@@ -12,19 +14,43 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AccountRepositoryImpl implements IAccountRepository {
 
-    @Override
-    public Optional<Account> findById(String accountId) {
-        return Optional.empty();
-    }
+    private final Repository accountRepository;
 
     @Override
-    public void update(Account account) {
+    public Optional<Account> findById(String accountId) {
+        var accountEntityOpt = accountRepository.findByAccountId(accountId);
+
+        if (accountEntityOpt.isEmpty()) {
+            return Optional.empty();
+        }
+
+        var accountEntity = accountEntityOpt.get();
+
+        return Optional.ofNullable(Account.builder()
+                .accountId(accountEntity.getAccountId())
+                .cash(accountEntity.getCash())
+                .name(accountEntity.getName())
+                .build());
 
     }
 
     @Override
     public Account create(Account account) {
-        return null;
+
+        var accountEntity = AccountEntity.builder()
+                .accountId(account.getAccountId())
+                .cash(account.getCash())
+                .name(account.getName())
+                .build();
+
+        this.accountRepository.save(accountEntity);
+
+        return account;
+    }
+
+    @Override
+    public void update(String accountId, BigDecimal delta) {
+        this.accountRepository.updateBalance(accountId, delta);
     }
 
 

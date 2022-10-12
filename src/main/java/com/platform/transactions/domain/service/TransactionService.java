@@ -1,5 +1,6 @@
 package com.platform.transactions.domain.service;
 
+import com.platform.transactions.domain.exception.AccountDoesNotExists;
 import com.platform.transactions.domain.model.Transaction;
 import com.platform.transactions.entrypoint.dto.TransactionRequest;
 import com.platform.transactions.infrastructure.IAccountRepository;
@@ -34,14 +35,12 @@ public class TransactionService {
         var accountOpt = this.accountRepository.findById(transaction.getAccountId());
 
         if (accountOpt.isEmpty()) {
-
+            throw new AccountDoesNotExists(transaction.getAccountId(), transaction.getTransactionId());
         }
 
-        var account = accountOpt.get();
+        var delta = transaction.valueWithSign();
 
-        account.add(new BigInteger(transaction.getValue()+""));
-
-        accountRepository.update(account);
+        accountRepository.update(transaction.getAccountId(), delta);
 
         transactionRepository.save(transaction);
 

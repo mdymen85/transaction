@@ -1,14 +1,21 @@
 package com.platform.transactions.infrastructure.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 @Data
 @Entity
 @Table(name = "account")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AccountEntity {
 
     @Id
@@ -19,7 +26,7 @@ public class AccountEntity {
     private String accountId;
 
     @Column(nullable = false)
-    private BigInteger cash;
+    private BigDecimal cash;
 
     @Column(nullable = false)
     private String name;

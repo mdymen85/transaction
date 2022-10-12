@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class TransactionController {
 
+    private final IEntrypoint entrypoint;
+
     @RequestMapping(path = "/v1/transaction", method = RequestMethod.POST)
     public void createTransaction(@RequestBody TransactionRequest request) {
-
+        entrypoint.createTransaction(request);
     }
 
 }
