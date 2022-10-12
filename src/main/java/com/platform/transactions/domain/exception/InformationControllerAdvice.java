@@ -39,5 +39,13 @@ public class InformationControllerAdvice {
                 .getResponseErrorObject();
     }
 
+    @ExceptionHandler(NotEnoughMoneyException.class)
+    public ResponseEntity<ResponseErrorObject> notEnoughMoneyException(NotEnoughMoneyException error) {
+        return new ResponseError(error.getCode(),
+                messageSource.getMessage(error.getCode(), new Object[] {error.getAccountId(), error.getCash(), error.getValue()}, Locale.ENGLISH),
+                HttpStatus.BAD_REQUEST)
+                .getResponseErrorObject();
+    }
+
 }
 

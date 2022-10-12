@@ -1,7 +1,9 @@
 package com.platform.transactions.domain.service;
 
 import com.platform.transactions.domain.exception.AccountDoesNotExists;
+import com.platform.transactions.domain.exception.NotEnoughMoneyException;
 import com.platform.transactions.domain.model.Transaction;
+import com.platform.transactions.domain.model.TransactionType;
 import com.platform.transactions.domain.service.aop.AccountControl;
 import com.platform.transactions.domain.service.aop.IdempotencyControl;
 import com.platform.transactions.entrypoint.dto.TransactionRequest;
@@ -37,6 +39,20 @@ public class TransactionService {
         log.info("Starting transaction {} for account {} and value {}", transaction.getTransactionId(), transaction.getAccountId(), transaction.getValue());
 
         var delta = transaction.valueWithSign();
+
+        var optAccount = accountRepository.findById(transaction.getAccountId());
+
+        if (!optAccount.isPresent()) {
+            throw new AccountDoesNotExists(transaction.getAccountId());
+        }
+
+        var account = optAccount.get();
+
+        if (TransactionType.DEBIT.equals(transaction.getType()) &&
+                account.getCash().compareTo(transaction.getValue()) < 0) {
+            log.error("The account {} does not have enough money {} for the transaction value {}", transaction.getAccountId(), account.getCash(), transaction.getValue());
+            throw new NotEnoughMoneyException(transaction.getAccountId(), account.getCash(), transaction.getValue());
+        }
 
         log.info("Delta {} will be applied to the account {}", delta, transaction.getAccountId());
 
