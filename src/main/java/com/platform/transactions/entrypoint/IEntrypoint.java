@@ -6,7 +6,7 @@ import com.platform.transactions.entrypoint.dto.TransactionRequest;
 
 public interface IEntrypoint {
 
-    void createTransaction(TransactionRequest request);
+    TransactionRequest createTransaction(TransactionRequest request);
 
     AccountResponse createAccount(AccountRequest request);
 

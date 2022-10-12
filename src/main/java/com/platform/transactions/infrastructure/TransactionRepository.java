@@ -7,6 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface TransactionRepository extends CrudRepository<TransactionEntity, Long> {
 
-    public void save(Transaction transaction);
-
+    boolean existsByTransactionId(String transactionId);
 }

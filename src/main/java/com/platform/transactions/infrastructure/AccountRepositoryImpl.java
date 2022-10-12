@@ -53,5 +53,10 @@ public class AccountRepositoryImpl implements IAccountRepository {
         this.accountRepository.updateBalance(accountId, delta);
     }
 
+    @Override
+    public boolean existsByAccountId(String accountId) {
+        return this.accountRepository.existsByAccountId(accountId);
+    }
+
 
 }

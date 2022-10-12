@@ -17,4 +17,6 @@ public interface Repository extends CrudRepository<AccountEntity, Long> {
     @Modifying(clearAutomatically = true)
     @Query("UPDATE AccountEntity  a SET a.cash = a.cash + :delta WHERE a.accountId = :accountId")
     void updateBalance(@Param("accountId") String accountId, @Param("delta") BigDecimal delta);
+
+    boolean existsByAccountId(String accountId);
 }

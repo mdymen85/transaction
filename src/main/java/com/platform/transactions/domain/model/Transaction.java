@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 @Data
 @Getter
 @NoArgsConstructor
+@ToString
 public class Transaction {
 
     private String transactionId;
@@ -20,15 +21,15 @@ public class Transaction {
     public Transaction(String transactionId, String accountId, BigDecimal value, TransactionType transactionType) {
 
         if (value.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IncorrectValueException();
+            throw new IncorrectValueException(value);
         }
 
         if (Strings.isBlank(transactionId)) {
-            throw new IncorrectValueException();
+            throw new IncorrectValueException(transactionId);
         }
 
         if (Strings.isBlank(accountId)) {
-            throw new IncorrectValueException();
+            throw new IncorrectValueException(accountId);
         }
 
         this.transactionId = transactionId;

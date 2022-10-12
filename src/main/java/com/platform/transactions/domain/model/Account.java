@@ -21,7 +21,7 @@ public class Account {
 
     public Account add(BigDecimal value) {
         if (value == null) {
-            throw new IncorrectValueException();
+            throw new IncorrectValueException(value);
         }
         cash.add(value);
         return this;
@@ -29,7 +29,7 @@ public class Account {
 
     public Account substract(BigDecimal value) {
         if (value == null) {
-            throw new IncorrectValueException();
+            throw new IncorrectValueException(value);
         }
         cash.subtract(value);
         return this;

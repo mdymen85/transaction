@@ -1,13 +1,16 @@
 package com.platform.transactions.infrastructure.entity;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 @Data
 @Entity
 @Table(name = "transaction")
+@Builder
 public class TransactionEntity {
 
     @Id
@@ -21,6 +24,6 @@ public class TransactionEntity {
     private String accountId;
 
     @Column(name= "cash_value", nullable = false)
-    private BigInteger value;
+    private BigDecimal value;
 
 }

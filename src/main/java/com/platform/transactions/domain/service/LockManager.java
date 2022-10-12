@@ -18,13 +18,17 @@ public class LockManager {
 
         var lock = redissonClient.getFairLock(accountId);
 
+        log.info("Acquiring locking for account {}", accountId);
+
         lock.lock();
+
+        log.info("Lock for account {} acquired", accountId);
 
         method.accept(object);
 
         lock.unlock();
 
-
+        log.info("Releasing lock for account {}", accountId);
 
     }
 

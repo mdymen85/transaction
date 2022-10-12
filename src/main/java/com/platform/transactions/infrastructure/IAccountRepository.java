@@ -13,4 +13,5 @@ public interface IAccountRepository {
 
     void update(String accountId, BigDecimal delta);
 
+    boolean existsByAccountId(String accountId);
 }

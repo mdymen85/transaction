@@ -1,15 +1,13 @@
 package com.platform.transactions.entrypoint.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class AccountRequest {
 
     private String name;

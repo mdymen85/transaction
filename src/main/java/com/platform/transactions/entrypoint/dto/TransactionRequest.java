@@ -1,5 +1,6 @@
 package com.platform.transactions.entrypoint.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -14,4 +15,12 @@ public class TransactionRequest {
 
     public TransactionRequest(){}
 
+    public TransactionRequest(String transactionId, String accountId, TransactionType type, BigDecimal value) {
+
+        this.transactionId = transactionId;
+        this.accountId = accountId;
+        this.type = type;
+        this.value = value;
+
+    }
 }
